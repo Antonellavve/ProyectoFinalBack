@@ -7,11 +7,11 @@ export const dbConnection = async (): Promise<void>=>{
         throw new Error("La URL no esta definida conrrectamente");
         }
         await mongoose.connect(dbURL)
-        console.log("Base de datos online");
+        console.log("Base de datos conectada");
         
     }catch(error){
-    console.log(error);
-    throw new Error ("Error a la hora de iniciar la base de datos");
+        console.log(error);
+        throw new Error ("Error en el momento de iniciar la base de datos");
     }
     
 }

@@ -5,6 +5,8 @@ export interface IUser{
     email: string;
     password: string;
     admin: boolean;
+    code?: string;
+    verified?: boolean;
 }
 
 const UserSchema = new Schema<IUser>({
@@ -24,6 +26,13 @@ const UserSchema = new Schema<IUser>({
 		type: Boolean,
 		default: false,
 	},
+    code: {
+        type: String
+    },
+    verified: {
+        type: Boolean,
+        default: false
+    },
 })
 
 //para evitar enviar al cliente informacion que no necesita ver, por ejemplo los datos que le envio.
