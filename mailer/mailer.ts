@@ -19,7 +19,7 @@ export const sendEmail = async(to: string, code: string): Promise<void>=>{
             form: '"Akika" akikaa2024@gmail.com',
             to,
             subject: "Codigo de verificacion para tu cuenta",
-            text: `Lllego tu codigo para Akika.
+            text: `Llego tu codigo para Akika.
             El codigo para verificarte es : ${code}
             `
     }

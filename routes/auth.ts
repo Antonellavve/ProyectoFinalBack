@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login, register } from "../controllers/auth";
+import { login, register, verifyUser } from "../controllers/auth";
 import { check } from "express-validator";
 import {existingEmail} from "../helpers/validatorsDB"
 import { collectErrors } from "../middlewares/collectErrors";
@@ -26,4 +26,14 @@ router.post("/login",
     collectErrors,
 ],login) //*luego de que pasa los check, entra en la funcion del auth de los controladores 
 
+
+router.patch(
+    "/verify",
+    [
+        check ("email", " El email es requerido").not().isEmpty(),
+        check ("code", "El codigo de verificacion es requerido").not().isEmpty(),
+        collectErrors, 
+    ],verifyUser
+)
+//se usa patch porque vamos a modificar un dato de la BD
 export default router

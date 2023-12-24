@@ -70,3 +70,45 @@ export const login = async (req: Request, res: Response): Promise<void> =>{
 }
 
 //en ambos casos se debieron chequear(check del auth de routes) para entrar en estas funciones
+
+export const verifyUser = async (req: Request, res: Response): Promise<void> =>{
+    const { email, code} = req.body
+
+    try{
+        const user =await User.findOne({email})
+
+        if (!user){
+            res.status(400).json({
+                msj: "No se encontro el email en la base de datos"
+            })
+            return;
+        }
+
+        if (user.verified){
+            res.status(400).json({
+                msj: "El usuario ya esta correctamente verificado"
+            })
+            return;
+        }
+
+        if(user.code !== code){ //si el codigo ingresado por el usuario es diferente al codigo que tengo..
+            res.status(401).json({
+                msj: "El codigo ingresado es incorrecto"
+            })
+            return;
+        }
+
+        const userActualizado = await User.findOneAndUpdate({email}, {verified: true})
+
+        res.status(200).json({
+            msj: "Usuario verificado con exito"
+        })
+
+
+    }catch (error){
+        console.log(error);
+        res.status(500).json({
+            msj: "Error en el servidor"
+        })        
+    }
+}
