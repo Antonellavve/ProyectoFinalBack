@@ -31,12 +31,12 @@ export class Server {
         
         
         middlewares(): void{
-            this.app.use(cors()); //cors, medidas que va a permitir restringir solicitudes que 
+            this.app.use(cors());
+             //cors, medidas que va a permitir restringir solicitudes que 
             //vengan de una url distinta de la que estan instanciado en nuestra api, medidas de
-            // seguridad no permitir solicitudes cruzadas 
+            // seguridad no permitir solicitudes cruzadas
             this.app.use(express.json());
         }
-
         routes(): void {
             this.app.use(this.authPath, authRoutes);
             this.app.use(this.ordersPath, ordersRoutes);
