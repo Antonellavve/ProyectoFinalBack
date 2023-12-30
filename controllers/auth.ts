@@ -6,9 +6,9 @@ import randomstring from "randomstring";
 import generateJWT from "../helpers/generateJWT";
 
 export const register = async (req: Request, res: Response): Promise<void> =>{
-    const {nombre, email, password}: IUser = req.body;
+    const {name, email, password}: IUser = req.body;
 
-    const user = new User ({nombre, email, password})
+    const user = new User ({name, email, password})
 
     const salt = bcryptjs.genSaltSync()
     // "salt" se combina con la contraseña para crear 
@@ -71,44 +71,63 @@ export const login = async (req: Request, res: Response): Promise<void> =>{
 
 //en ambos casos se debieron chequear(check del auth de routes) para entrar en estas funciones
 
-export const verifyUser = async (req: Request, res: Response): Promise<void> =>{
-    const { email, code} = req.body
+export const verifyUser = async (req: Request, res: Response): Promise<void> => {
+    const { email, code } = req.body;
 
-    try{
-        const user =await User.findOne({email})
+    try {
+        const user = await User.findOne({ email });
 
-        if (!user){
+        if (!user) {
             res.status(400).json({
-                msj: "No se encontro el email en la base de datos"
-            })
+                success: false,
+                msj: "No se encontró el email en la base de datos"
+            });
             return;
         }
 
-        if (user.verified){
+        if (user.verified) {
             res.status(400).json({
-                msj: "El usuario ya esta correctamente verificado"
-            })
+                success: false,
+                msj: "El usuario ya está correctamente verificado"
+            });
             return;
         }
 
-        if(user.code !== code){ //si el codigo ingresado por el usuario es diferente al codigo que tengo..
-            res.status(401).json({
-                msj: "El codigo ingresado es incorrecto"
-            })
+        if (user.code !== code) {
+            res.status(400).json({
+                success: false,
+                msj: "El código ingresado es incorrecto"
+            });
             return;
         }
 
-        const userActualizado = await User.findOneAndUpdate({email}, {verified: true})
+        const userActualizado = await User.findOneAndUpdate({ email }, { verified: true });
 
         res.status(200).json({
-            msj: "Usuario verificado con exito"
-        })
-
-
-    }catch (error){
-        console.log(error);
+            success: true,
+            msj: "Usuario verificado con éxito"
+        });
+    } catch (error) {
+        console.log('Error en verifyUser:', error);
         res.status(500).json({
+            success: false,
             msj: "Error en el servidor"
-        })        
+        });
     }
-}
+};
+export const logout = async (req: Request, res: Response): Promise<void> => {
+    console.log('Inicio de la función logout');
+
+    try {
+      res.json({
+        success: true,
+        message: 'Logout exitoso',
+      });
+    } catch (error) {
+      console.error('Error en logout:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Error en el servidor al intentar cerrar sesión',
+      });
+    }
+  };
