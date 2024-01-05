@@ -4,11 +4,12 @@ import bcryptjs from "bcryptjs"
 import { sendEmail } from "../mailer/mailer";
 import randomstring from "randomstring";
 import generateJWT from "../helpers/generateJWT";
+import { ROLESADMIN } from "../helpers/constant";
+
 
 export const register = async (req: Request, res: Response): Promise<void> =>{
-    const {name, email, password}: IUser = req.body;
-
-    const user = new User ({name, email, password})
+    const {name, email, password, rolAdmin}: IUser = req.body;
+    const user = new User ({name, email, password, rolAdmin});
 
     const salt = bcryptjs.genSaltSync()
     // "salt" se combina con la contraseña para crear 
@@ -17,6 +18,11 @@ export const register = async (req: Request, res: Response): Promise<void> =>{
     //hashea (encripta) la contraseña del usuario utilizando el salt generado, 
     //y se asigna la contraseña encriptada a la propiedad password del objeto user
     
+    const adminKey = req.headers["admin-key"]
+    if(adminKey === process.env.ADMINKEY) {
+        user.rolAdmin = ROLESADMIN.admin
+    }
+
     const newCode = randomstring.generate(6)
 
     user.code = newCode;

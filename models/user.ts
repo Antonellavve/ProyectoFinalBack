@@ -1,10 +1,11 @@
 import {Model, Schema, model} from "mongoose";
+import { ROLESADMIN } from "../helpers/constant";
 
 export interface IUser{
     name: string;
     email: string;
     password: string;
-    admin: boolean;
+    rolAdmin?: string;
     code?: string;
     verified?: boolean;
 }
@@ -22,9 +23,9 @@ const UserSchema = new Schema<IUser>({
         type: String,
         required: [true, 'La contraseña es obligatoria']
     },
-    admin: {
-		type: Boolean,
-		default: false,
+    rolAdmin: {
+		type: String,
+        default: ROLESADMIN.user
 	},
     code: {
         type: String
@@ -38,7 +39,7 @@ const UserSchema = new Schema<IUser>({
 //para evitar enviar al cliente informacion que no necesita ver, por ejemplo los datos que le envio.
 //el objeto se va a ir filtrando apartir de los valores que le pongo en la funcion
 UserSchema.methods.toJSON = function() {
-    const {__v, password, _id, ...user } = this.toObject();
+    const {__v, password, _id, code, ...user } = this.toObject();
     return user;
 }
 

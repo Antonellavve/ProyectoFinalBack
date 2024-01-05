@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
+import { ROLESADMIN } from "../helpers/constant";
 
 export const isAdminUser = (req: Request, res: Response, next: NextFunction) => {
-	const { admin } = req.body.user;
+	const { rolAdmin } = req.body;
 
-	if (!admin) {
+	if (rolAdmin !==ROLESADMIN.admin) {
 		res.status(401).json({
 			msg: "El usuario no es administrador",
 		});
