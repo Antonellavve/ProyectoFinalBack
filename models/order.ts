@@ -27,15 +27,17 @@ export interface IOrder{
 }
 
 const OrderSchema = new Schema<IOrder>({
-    create: {
+    create: { //la fecha de creada la orden, y es now. la data de esto 
+        //no la envia el front, el resto si.
         type: Date,
         default: Date.now
     },
     user: {
-        type: Schema.Types.ObjectId,
-        ref:'User',
+        type: Schema.Types.ObjectId, //cuando guardo el object id le tengo que decir
+        ref:'User', //a que coleccion hace referencia.
         required: true
-    }, price: {
+    }, 
+    price: {
         type: Number,
         required: true,
     },
@@ -91,8 +93,8 @@ const OrderSchema = new Schema<IOrder>({
         required: true
     },
 
-})
+});
 
-const Order: Model<IOrder> = model<IOrder>("Order", OrderSchema)
+const Order: Model<IOrder> = model<IOrder>("Order", OrderSchema);
 
 export default Order

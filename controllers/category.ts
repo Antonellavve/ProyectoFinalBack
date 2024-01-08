@@ -5,7 +5,7 @@ export const createCategory = async (req: Request, res: Response)=>{
     
     const categoryData : ICategory = req.body
 
-    const {title, code} = categoryData;
+    const {title} = categoryData;
 
     const category = new Category (categoryData);
 

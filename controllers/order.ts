@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import Order, {IOrder} from "../models/order";
 import { ObjectId } from "mongoose";
 
-export const getOrders = async (req: Request, res: Response): Promise<void> =>{
+export const getOrders = async (req: Request, res: Response) =>{
 //cuando se genera el token viaja info, y podemos obtener el id del usuario
     const userId: ObjectId = req.body.userConfirmed._id;
 
@@ -15,23 +15,23 @@ export const getOrders = async (req: Request, res: Response): Promise<void> =>{
     })
 }
 
-export const createOrder = async(req: Request, res: Response): Promise<void> =>{
+export const createOrder = async(req: Request, res: Response) =>{
     const user: ObjectId = req.body.userConfirmed._id
 
     const orderData : IOrder = req.body
 
     const data ={
         ...orderData,
-        user: user,
-        createAt: new Date(),
+        user: user, //id del usuario
+        createAt: new Date(), //fecha
         status: "pending"
     }
 
     const order = new Order(data)
 
-    await order.save(),
+    await order.save(), //guardar en BD
 
-    res.status(201).json({
+    res.status(201).json({ //201 CREADO CON ÉXITO
         order
     })
 }

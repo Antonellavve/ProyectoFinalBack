@@ -1,11 +1,11 @@
-import {Model, ObjectId, Schema, model} from "mongoose";
+import {Model, Types, Schema, model} from "mongoose";
 
 export interface IProducts{
     id: number; //en minuscula hace referencia al tipo de dato
     title: string;
     img: string;
     price: number;
-    category: ObjectId;
+    category: Types.ObjectId;
     stock: number;
 }
 
@@ -37,10 +37,6 @@ const ProductsSchema = new Schema<IProducts>({
         required: true,
     },
 })
-
-// ProductsSchema.methods.toJSON = function(){
-//     const {__v, }
-// }
 
 const Products: Model<IProducts> = model <IProducts>("Products", ProductsSchema);
 

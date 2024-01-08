@@ -48,7 +48,7 @@ export const createProducts = async (req : Request, res : Response)=>{
 
     const {id, price, category, title, stock} = productsData;
 
-    const categoryData = await Category.findOne({title: category}) //*
+    const categoryData = await Category.findOne({title: category}) 
 //validaciones para cuando falta algun dato
     if(!id || !title || !category || !price){
         res.json({

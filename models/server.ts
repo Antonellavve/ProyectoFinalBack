@@ -2,9 +2,9 @@ import express, {Express} from "express";
 import cors from "cors";
 import { conectarDB } from "../database/config";
 import authRoutes from "../routes/auth"
-import ordersRoutes from "../routes/orders";
-import productsRoutes from "../routes/products";
+import ordersRoutes from "../routes/order";
 import categoryRoutes from "../routes/category"
+import productsRoutes from "../routes/products";
 
 export class Server {
     //especifico cada declaracion. Armo mi servidor
