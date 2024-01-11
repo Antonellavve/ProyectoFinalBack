@@ -1,11 +1,11 @@
-import {Model, Types, Schema, model} from "mongoose";
+import {Model, ObjectId, Schema, model} from "mongoose";
 
 export interface IProducts{
     id: number; //en minuscula hace referencia al tipo de dato
     title: string;
     img: string;
     price: number;
-    category: Types.ObjectId;
+    category: ObjectId;
     stock: number;
 }
 
@@ -29,8 +29,7 @@ const ProductsSchema = new Schema<IProducts>({
     },
     category:{
         type: Schema.Types.ObjectId, //hace referencia a un documento en otro lado
-        ref: "Category", //documento dentro de la coleccion Category
-        required: true
+        ref: "Categories", //documento dentro de la coleccion Category
     },
     stock:{
         type: Number,

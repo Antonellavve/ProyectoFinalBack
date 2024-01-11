@@ -125,15 +125,15 @@ export const logout = async (req: Request, res: Response): Promise<void> => {
     console.log('Inicio de la función logout');
 
     try {
-      res.json({
+        res.json({
         success: true,
         message: 'Logout exitoso',
-      });
+    });
     } catch (error) {
-      console.error('Error en logout:', error);
-      res.status(500).json({
+        console.error('Error en logout:', error);
+        res.status(500).json({
         success: false,
         message: 'Error en el servidor al intentar cerrar sesión',
-      });
+    });
     }
-  };
+};

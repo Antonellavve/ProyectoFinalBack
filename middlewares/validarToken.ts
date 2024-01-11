@@ -6,12 +6,12 @@ const validarToken = async (req: Request, res: Response, next: NextFunction): Pr
     const token = req.headers ["x-token"] as string; //el front me manda el token
     //a traves del header y se llama "x-token" y le digo que lo tomo como string
 
-     if(!token){
+    if(!token){
         res.status(401).json({
             msj: "Se debe ingresar un token válido"
         })
         return;
-     }
+    }
 
      try{ //verificacion del JWT ingresado
         const claveSecreta = process.env.CLAVESECRETA as string;
@@ -32,13 +32,13 @@ const validarToken = async (req: Request, res: Response, next: NextFunction): Pr
         req.body.id = id;
         next();
 
-     }catch (error){
+    }catch (error){
         console.log(error);
         res.status(401).json({
             msj: "Token inválido"
         })
         
-     }
+    }
 }
 
 export default validarToken;

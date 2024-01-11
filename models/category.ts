@@ -2,6 +2,7 @@ import { Schema, model, Model } from "mongoose";
 
 export interface ICategory {
 	title: string;
+	code: string;
 }
 
 const CategorySchema = new Schema<ICategory>({
@@ -9,6 +10,9 @@ const CategorySchema = new Schema<ICategory>({
 		type: String,
 		required: true,
 		unique: true,
+	},
+	code: {
+		type: String,
 	},
 });
 
