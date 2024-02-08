@@ -10,19 +10,19 @@ export const getOrders = async (req: Request, res: Response) =>{
 
     const orders =await Order.find(consulta)
 
-    res.json({
+    res.status(200).json({
         data: [...orders]
     })
 }
 
 export const createOrder = async(req: Request, res: Response) =>{
-    const user: ObjectId = req.body.userConfirmed._id
+    const userId: ObjectId = req.body.userConfirmed._id;
 
     const orderData : IOrder = req.body
 
     const data ={
         ...orderData,
-        user: user, //id del usuario
+        user: userId, //id del usuario
         createAt: new Date(), //fecha
         status: "pending"
     }

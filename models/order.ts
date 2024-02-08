@@ -1,29 +1,29 @@
 import {Model, Schema, Types, model} from "mongoose";
 
 interface IShipping {
-    name: string;
-    email: string;
-    dni: number;
-    adress: string;
+    name: String;
+    cellphone: String;
+    location: String
+    address: String;
 }
 
-interface IItems{
-    id: number;
-    price: number;
-    quantity: number;
-    title: string;
+interface IItem{
+    id: Number;
+    price: Number;
+    quantity: Number;
+    title: String;
 }
 
 export interface IOrder{
     create: Date;
     user: Types.ObjectId; //esto quiere decir que este modelo de orden
     //tiene un dato que hace referencia al usuario
-    price: number;
-    shippingCost: number;
-    items: IItems[];
+    price: Number;
+    shippingCost: Number;
+    items: IItem[];
     shippingDetails: IShipping;
-    status: string;
-    total: number;
+    status: String;
+    total: Number;
 }
 
 const OrderSchema = new Schema<IOrder>({
@@ -71,13 +71,13 @@ const OrderSchema = new Schema<IOrder>({
             type: String,
             required: true
         },
-        email:{
+        cellphone:{
             type: String,
             require: true
         },
-        dni:{
-            type: Number,
-            require: true
+        location: {
+            type: String,
+            required: true,
         },
         address: {
             type: String,

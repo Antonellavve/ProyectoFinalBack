@@ -120,7 +120,7 @@ export const updateProducts = async (req: Request, res: Response)=>{
 
 
 export const deleteProducts = async (req: Request, res: Response)=>{
-   
+
     const {id} = req.params;
 
     const productoEnDb = await Products.findOne({id: id})

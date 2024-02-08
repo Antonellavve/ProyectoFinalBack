@@ -29,7 +29,7 @@ const ProductsSchema = new Schema<IProducts>({
     },
     category:{
         type: Schema.Types.ObjectId, //hace referencia a un documento en otro lado
-        ref: "Categories", //documento dentro de la coleccion Category
+        ref: "Category", //documento dentro de la coleccion Category
     },
     stock:{
         type: Number,
