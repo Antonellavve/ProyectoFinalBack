@@ -1,22 +1,30 @@
 import nodemailer from "nodemailer";
 
-//configuracion de nodemailer para usar Gmail
-//crear cuenta con verificacion en dos pasos
-//crear el pass para aplicaciones
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth:{
-        user: "akikaa2024@gmail.com",
-        pass: "qwufniuoqixzhyyn"
-    },
-    from: "akikaa2024@gmail.com"
-})
+const createTransporter = () => {
+    const emailUser = process.env.EMAIL_USER;
+    const emailAppPassword = process.env.EMAIL_APP_PASSWORD;
+
+    if (!emailUser || !emailAppPassword) {
+        throw new Error("Falta configurar EMAIL_USER o EMAIL_APP_PASSWORD");
+    }
+
+    return nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: emailUser,
+            pass: emailAppPassword,
+        },
+    });
+};
 
 export const sendEmail = async(to: string, code: string): Promise<void>=>{
     try {
+        const emailUser = process.env.EMAIL_USER;
+        const transporter = createTransporter();
+
         //configuramos los detalles del correo
         const mailOptions ={
-            form: '"Akika" akikaa2024@gmail.com',
+            from: `"Akika" <${emailUser}>`,
             to,
             subject: "Codigo de verificacion para tu cuenta",
             text: `Llego tu codigo para Akika.
@@ -29,7 +37,6 @@ export const sendEmail = async(to: string, code: string): Promise<void>=>{
         console.log('Correo electronico enviado');
         
     } catch(error){
-        console.log('Error al enviar el correo alectronico');
-        
+        console.error('Error al enviar el correo electrónico', error);
     }
 }
